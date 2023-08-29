@@ -1,0 +1,9 @@
+server:
+  port: 8070
+
+netty:
+  port: 8090
+  host: 127.0.0.1
+
+logging:
+  config: classpath:logback-boot.xml
