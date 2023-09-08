@@ -11,6 +11,7 @@
     <modules>
         <module>mq</module>
         <module>im</module>
+        <module>oauth</module>
     </modules>
 
     <parent>
@@ -43,6 +44,11 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
         </dependency>
     </dependencies>
 

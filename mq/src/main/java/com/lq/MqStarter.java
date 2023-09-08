@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication(scanBasePackages = "com.lq")
-public class Start {
+public class MqStarter {
     public static void main(String[] args) {
 
-        SpringApplication.run(Start.class);
+        SpringApplication.run(MqStarter.class);
 
         System.out.println("服务启动成功");
     }
