@@ -105,7 +105,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .tokenServices(createDefaultTokenServices())
                 .authorizationCodeServices(authorizationCodeServices());
 //        // 自定义确认授权页面
-//        endpoints.pathMapping("/oauth/confirm_access", "/oauth/confirm_access");
+        endpoints.pathMapping("/oauth/confirm_access", "/oauth/confirm_access");
 //        // 自定义错误页
 //        endpoints.pathMapping("/oauth/error", "/oauth/error");
         // 自定义异常转换类
@@ -118,8 +118,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setReuseRefreshToken(true);
         tokenServices.setClientDetailsService(customClientDetailsService);
-//        // 设置令牌有效时间
-//        tokenServices.setAccessTokenValiditySeconds(7200);//30秒
+//        // 设置令牌有效时间 此处如果client设定了值 优先使用client值
+        tokenServices.setAccessTokenValiditySeconds(7200);
 //        // 设置刷新令牌的有效时间
 //        tokenServices.setRefreshTokenValiditySeconds(300000);
         return tokenServices;

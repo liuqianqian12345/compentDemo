@@ -50,7 +50,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-                .antMatchers("/com/lq/oauth/token/**").permitAll()
+                .antMatchers("/oauth/token/**").permitAll()
                 .anyRequest().authenticated();
     }
 

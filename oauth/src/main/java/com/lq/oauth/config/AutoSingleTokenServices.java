@@ -28,9 +28,9 @@ import java.util.UUID;
 
  **/
 public class AutoSingleTokenServices extends DefaultTokenServices {
-    private int refreshTokenValiditySeconds = 60 * 60 * 24 * 30; // default 30 days.
+    private int refreshTokenValiditySeconds = 60 * 60 * 24 * 5; // default 5 days.
 
-    private int accessTokenValiditySeconds = 60 * 60 * 12; // default 12 hours.
+    private int accessTokenValiditySeconds = 60 * 60 * 8; // default 2 hours.
 
     private boolean supportRefreshToken = false;
 
@@ -64,7 +64,11 @@ public class AutoSingleTokenServices extends DefaultTokenServices {
                 DefaultOAuth2AccessToken oAuth2AccessToken = (DefaultOAuth2AccessToken) existingAccessToken;
                 String clientId=authentication.getOAuth2Request().getClientId();
                 ClientDetails clientDetail=clientDetailsService.loadClientByClientId(clientId);
-                oAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis()+clientDetail.getAccessTokenValiditySeconds()*1000));
+                if (clientDetail != null&& clientDetail.getAccessTokenValiditySeconds()!=null){
+                    oAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis()+clientDetail.getAccessTokenValiditySeconds()*1000));
+                }else {
+                    oAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis()+accessTokenValiditySeconds*1000));
+                }
                 // Re-store the access token in case the authentication has changed
                 tokenStore.storeAccessToken(oAuth2AccessToken, authentication);
                 return oAuth2AccessToken;

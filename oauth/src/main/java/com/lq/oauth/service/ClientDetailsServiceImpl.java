@@ -32,7 +32,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
         details.setClientSecret(SecurityUtils.encryptPassword("11111"));
         details.setAuthorizedGrantTypes(Arrays.asList("client_credentials", "refresh_token"));
         details.setResourceIds(Arrays.asList("1111"));
-        details.setAccessTokenValiditySeconds(1000);
+//        details.setAccessTokenValiditySeconds(7200);
         Map<String ,Object> map = new HashMap<>();
         map.put("status",1);
         details.setAdditionalInformation(map);
