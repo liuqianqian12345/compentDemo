@@ -1,14 +1,14 @@
 package com.lq.oauth.config;
 
+import com.lq.oauth.handler.OpenAccessDeniedHandler;
+import com.lq.oauth.handler.OpenAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -44,10 +44,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     private BearerTokenExtractor tokenExtractor = new BearerTokenExtractor();
 
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
 
-        resources.resourceId("11111").stateless(true);
+        resources.resourceId("11111")
+                .accessDeniedHandler(new OpenAccessDeniedHandler())
+                .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
+                .stateless(true);
 
     }
 
@@ -68,11 +72,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .logout().permitAll()
                 // /logout退出清除cookie
                 .addLogoutHandler(new CookieClearingLogoutHandler("token", "remember-me"))
-                .and()
-                // 认证鉴权错误处理,为了统一异常处理。每个资源服务器都应该加上。
-                .exceptionHandling()
-//                .accessDeniedHandler(new OpenAccessDeniedHandler())
-//                .authenticationEntryPoint(new OpenAuthenticationEntryPoint())
+                .logoutSuccessHandler(new LogoutSuccessHandler())
                 .and()
                 .csrf().disable()
                 // 禁用httpBasic

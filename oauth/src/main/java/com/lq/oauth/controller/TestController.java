@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @PreAuthorize("hasAuthority('test')")
+    @PreAuthorize("hasAuthority('test1')")
     @GetMapping("test")
     public String aa(){
         return "试验成功";
